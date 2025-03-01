@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>My Video App</title>
+  <style>
+    /* Reset and base styles */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      background-color: #000;
+      color: #eee;
+      line-height: 1.6;
+    }
+    a {
+      text-decoration: none;
+      color: #1dd1a1;
+    }
+    /* Header */
+    header {
+      background: #111;
+      color: #fff;
+      padding: 1.2em;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 6px rgba(255, 255, 255, 0.1);
+    }
+    header h1 {
+      font-size: 1.8em;
+      font-weight: 700;
+    }
+    header button {
+      background: #ff6b6b;
+      border: none;
+      color: #fff;
+      padding: 0.6em 1.2em;
+      border-radius: 4px;
+      font-size: 1em;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    header button:hover {
+      background: #ff4757;
+    }
+    /* Search Section */
+    #searchSection {
+      padding: 1em;
+      text-align: center;
+    }
+    #searchInput {
+      width: 90%;
+      max-width: 500px;
+      padding: 0.75em 1em;
+      border: 2px solid #333;
+      border-radius: 30px;
+      font-size: 1em;
+      background-color: #222;
+      color: #eee;
+      transition: border-color 0.3s ease;
+    }
+    #searchInput:focus {
+      outline: none;
+      border-color: #4b79a1;
+    }
+    /* Video List Container */
+    #videoList {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5em;
+      padding: 1.5em;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    /* Video Card */
+    .video-item {
+      background: #1e1e1e;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 4px 8px rgba(255, 255, 255, 0.05);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .video-item:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 16px rgba(255, 255, 255, 0.1);
+    }
+    .video-item img.thumbnail {
+      width: 100%;
+      display: block;
+    }
+    .video-content {
+      padding: 1em;
+    }
+    .video-content h3 {
+      font-size: 1.2em;
+      margin-bottom: 0.5em;
+      color: #fff;
+    }
+    .video-content p {
+      margin-bottom: 0.5em;
+      font-size: 0.95em;
+      color: #ccc;
+    }
+    .video-content .tags {
+      margin: 0.5em 0;
+    }
+    .video-content .tag {
+      display: inline-block;
+      background: #333;
+      color: #ddd;
+      border-radius: 3px;
+      padding: 0.3em 0.6em;
+      font-size: 0.8em;
+      margin-right: 0.4em;
+      margin-bottom: 0.4em;
+    }
+    .video-content .actions {
+      margin-top: 0.8em;
+    }
+    .video-content button.playBtn,
+    .video-content a.downloadBtn {
+      padding: 0.5em 1em;
+      border: none;
+      border-radius: 4px;
+      font-size: 0.9em;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      margin-right: 0.5em;
+    }
+    .video-content button.playBtn {
+      background: #4b79a1;
+      color: #fff;
+    }
+    .video-content button.playBtn:hover {
+      background: #3a6481;
+    }
+    .video-content a.downloadBtn {
+      background: #1dd1a1;
+      color: #fff;
+    }
+    .video-content a.downloadBtn:hover {
+      background: #10ac84;
+    }
+    /* Responsive adjustments */
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 1.5em;
+      }
+      header button {
+        padding: 0.5em 1em;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>My Video App</h1>
+    <!-- The Add Video button redirects users to the GitHub repository -->
+    <button id="addVideoBtn">Add Video</button>
+  </header>
+  
+  <section id="searchSection">
+    <input type="text" id="searchInput" placeholder="Search by title, category, or tags">
+  </section>
+  
+  <section id="videoList"></section>
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const videoListElement = document.getElementById('videoList');
+      const searchInput = document.getElementById('searchInput');
+      const addVideoBtn = document.getElementById('addVideoBtn');
+      
+      let videos = [];
+      
+      // Fetch videos from the external videos.json file
+      fetch('videos.json')
+        .then(response => response.json())
+        .then(data => {
+          videos = data;
+          displayVideos(videos);
+        })
+        .catch(error => console.error('Error fetching videos:', error));
+      
+      // Function to display videos on the page
+      function displayVideos(videosToDisplay) {
+        videoListElement.innerHTML = '';
+        videosToDisplay.forEach(video => {
+          const videoItem = document.createElement('div');
+          videoItem.className = 'video-item';
+          videoItem.innerHTML = `
+            <img src="${video.thumbnail}" alt="${video.title}" class="thumbnail">
+            <div class="video-content">
+              <h3>${video.title}</h3>
+              <p>${video.description}</p>
+              <p><strong>Category:</strong> ${video.category}</p>
+              <div class="tags">${video.tags.map(tag => `<span class="tag">${tag}</span>`).join(' ')}</div>
+              <div class="actions">
+                <button class="playBtn" data-videourl="${video.videoUrl}">Play</button>
+                <a href="${video.videoUrl}" download class="downloadBtn">Download</a>
+              </div>
+            </div>
+          `;
+          videoListElement.appendChild(videoItem);
+        });
+      }
+      
+      // Search functionality: Filter videos by title, category, or tags
+      searchInput.addEventListener('input', () => {
+        const query = searchInput.value.toLowerCase();
+        const filteredVideos = videos.filter(video => {
+          return video.title.toLowerCase().includes(query) ||
+                 video.category.toLowerCase().includes(query) ||
+                 video.tags.join(' ').toLowerCase().includes(query);
+        });
+        displayVideos(filteredVideos);
+      });
+      
+      // "Add Video" button: Redirect to the GitHub repository for forking and customization
+      addVideoBtn.addEventListener('click', () => {
+        window.location.href = 'https://github.com/y8tireu/reponame';
+      });
+      
+      // Redirect to video.html with the video URL as a query parameter when "Play" is clicked
+      videoListElement.addEventListener('click', (e) => {
+        if (e.target.classList.contains('playBtn')) {
+          const videoUrl = e.target.getAttribute('data-videourl');
+          window.location.href = `video.html?videoUrl=${encodeURIComponent(videoUrl)}`;
+        }
+      });
+    });
+  </script>
+</body>
+</html>
+

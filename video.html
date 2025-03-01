@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Video Playback</title>
+  <style>
+    /* Basic styling for video playback page */
+    body {
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: #000;
+    }
+    .video-container {
+      width: 90%;
+      max-width: 800px;
+    }
+    video {
+      width: 100%;
+      height: auto;
+      outline: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="video-container">
+    <video id="videoPlayer" controls autoplay></video>
+  </div>
+  <script>
+    // Extract the videoUrl parameter from the URL query string
+    const urlParams = new URLSearchParams(window.location.search);
+    const videoUrl = urlParams.get('videoUrl');
+    if (videoUrl) {
+      document.getElementById('videoPlayer').src = videoUrl;
+    } else {
+      document.body.innerHTML = '<p>No video selected.</p>';
+    }
+  </script>
+</body>
+</html>
+

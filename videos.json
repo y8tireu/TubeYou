@@ -1,0 +1,21 @@
+[
+  {
+    "id": "1",
+    "title": "Sample Video",
+    "description": "A sample video for demonstration.",
+    "thumbnail": "thumbnails/sample.jpg",
+    "videoUrl": "videos/sample.mp4",
+    "category": "Tutorial",
+    "tags": ["tutorial", "demo"]
+  },
+  {
+    "id": "2",
+    "title": "Another Video",
+    "description": "Another example video.",
+    "thumbnail": "thumbnails/another.jpg",
+    "videoUrl": "videos/another.mp4",
+    "category": "Entertainment",
+    "tags": ["entertainment", "fun"]
+  }
+]
+
