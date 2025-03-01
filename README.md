@@ -1,4 +1,4 @@
-# Fork, Use, and Customize My Video App
+# How to Fork, Use, and Customize My Video App
 
 This document provides step-by-step instructions on how to fork the repository, use the application locally, and customize it to your liking.
 
