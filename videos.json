@@ -1,16 +1,16 @@
 [
   {
     "id": "1",
-    "title": "Sample Video",
-    "description": "A sample video for demonstration.",
+    "title": "Bad Apple",
+    "description": "A video for demonstration.",
     "thumbnail": "thumbnails/sample.jpg",
     "videoUrl": "videos/sample.mp4",
-    "category": "Tutorial",
+    "category": "Random",
     "tags": ["tutorial", "demo"]
   },
   {
     "id": "2",
-    "title": "Another Video",
+    "title": "R.I.P",
     "description": "Another example video.",
     "thumbnail": "thumbnails/another.jpg",
     "videoUrl": "videos/another.mp4",
